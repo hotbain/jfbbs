@@ -56,7 +56,7 @@
     <div class="jf_inner jf_topic">
         ${topic.content!}
         <#if topic.reposted?? && topic.reposted == 1>
-            <div>原文地址：<a href="$!topic.original_url" target="_blank">${topic.original_url!}</a></div>
+            <div>原文地址：<a href="${topic.original_url!}" target="_blank">${topic.original_url!}</a></div>
         </#if>
     </div>
 </div>
@@ -75,7 +75,7 @@
             <#if session.user??>
             <div style="float: right;">
                 <span>
-                    <a href="#reply_input" onclick="reply_input('$!reply.id')">
+                    <a href="#reply_input" onclick="reply_input('${reply.id!}')">
                         <img src="${ctx_path}/static/img/reply.png" width="20">
                     </a>
                 </span>

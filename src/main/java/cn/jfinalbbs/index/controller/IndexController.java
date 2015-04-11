@@ -31,8 +31,7 @@ public class IndexController extends Controller {
         setAttr("scoreTopTen", scoreTopTen);
         setAttr("tab", tab);
         setAttr("q", q);
-//        setCookie(Constants.USER_COOKIE, User.me.findById("c6c8f3ac147b491eb6457cbcf53cb17f").getStr("id"), 30*24*60*60);
-		setSessionAttr(Constants.USER_SESSION, User.me.findById("c6c8f3ac147b491eb6457cbcf53cb17f"));
+//		setSessionAttr(Constants.USER_SESSION, User.me.findById("c6c8f3ac147b491eb6457cbcf53cb17f"));
         render("index.html");
 	}
 

@@ -45,7 +45,7 @@
 </#if>
 <#--签到-->
 <#if sidebar_checkin == "show">
-    <#if session.user?? && session.user.mission != session.today?date>
+    <#if session.user?? && session.user.mission?date != session.today?date>
     <div class="jf_panel">
         <div class="jf_inner">
             <a href="${ctx_path}/mission/daily" class="btn btn-success">领取今日的登录奖励</a>
