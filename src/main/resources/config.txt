@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 jdbcUrl = jdbc:mysql://localhost/jfinalbbs?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
 user = root
 password =
 devMode = true
+=======
+jdbcUrl = jdbc:mysql://localhost/jfinalbbs?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = root
+password =
+devMode = true
+>>>>>>> 35f65919b76cb8bc69ba9ff655dafc83cca4f741
