@@ -21,7 +21,7 @@
             <tbody>
             <#list top100 as user>
                 <tr>
-                    <td style="vertical-align: middle;padding:4px;">${user_index}</td>
+                    <td style="vertical-align: middle;padding:4px;">${user_index + 1}</td>
                     <td style="vertical-align: middle;padding:4px; max-width: 150px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
                         <a href="${ctx_path}/user/${user.id!}"><img src="${user.avatar!}" width="30"></a>
                         &nbsp;${user.nickname!}

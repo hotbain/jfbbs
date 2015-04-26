@@ -1,15 +1,15 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : 45.62.98.174
- Source Server Version : 50541
- Source Host           : 45.62.98.174
+ Source Server         : localhost
+ Source Server Version : 50163
+ Source Host           : localhost
  Source Database       : jfinalbbs
 
- Target Server Version : 50541
+ Target Server Version : 50163
  File Encoding         : utf-8
 
- Date: 04/11/2015 15:24:14 PM
+ Date: 04/26/2015 16:35:26 PM
 */
 
 SET NAMES utf8;
@@ -27,6 +27,21 @@ CREATE TABLE `admin_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+--  Table structure for `code`
+-- ----------------------------
+DROP TABLE IF EXISTS `code`;
+CREATE TABLE `code` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(32) DEFAULT NULL,
+  `in_time` datetime DEFAULT NULL,
+  `expire_time` datetime DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '0未使用  1已使用',
+  `type` varchar(45) DEFAULT NULL COMMENT '验证码类型',
+  `target` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 --  Table structure for `collect`
 -- ----------------------------
 DROP TABLE IF EXISTS `collect`;
@@ -36,7 +51,19 @@ CREATE TABLE `collect` (
   `author_id` varchar(32) DEFAULT NULL,
   `in_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- ----------------------------
+--  Table structure for `link`
+-- ----------------------------
+DROP TABLE IF EXISTS `link`;
+CREATE TABLE `link` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `display_index` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `mission`
@@ -64,7 +91,7 @@ CREATE TABLE `notification` (
   `rid` varchar(32) DEFAULT NULL,
   `in_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 --  Table structure for `reply`
@@ -84,11 +111,24 @@ CREATE TABLE `reply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
+--  Table structure for `section`
+-- ----------------------------
+DROP TABLE IF EXISTS `section`;
+CREATE TABLE `section` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `tab` varchar(45) DEFAULT NULL,
+  `display_index` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 --  Table structure for `topic`
 -- ----------------------------
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic` (
   `id` varchar(32) NOT NULL DEFAULT '',
+  `s_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `content` longtext,
   `in_time` datetime DEFAULT NULL,
@@ -97,7 +137,6 @@ CREATE TABLE `topic` (
   `author_id` varchar(32) DEFAULT NULL,
   `reposted` int(11) DEFAULT NULL COMMENT '1：转载 0：原创',
   `original_url` varchar(255) DEFAULT NULL COMMENT '原文连接',
-  `tab` varchar(45) DEFAULT NULL,
   `top` int(11) DEFAULT NULL COMMENT '1置顶 0默认',
   `good` int(11) DEFAULT NULL COMMENT '1精华 0默认',
   PRIMARY KEY (`id`)
@@ -118,8 +157,12 @@ CREATE TABLE `user` (
   `avatar` varchar(255) DEFAULT NULL,
   `mission` date DEFAULT NULL,
   `in_time` datetime DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `open_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `TOKEN_UNIQUE` (`token`)
+  UNIQUE KEY `TOKEN_UNIQUE` (`token`),
+  UNIQUE KEY `EMAIL_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 SET FOREIGN_KEY_CHECKS = 1;

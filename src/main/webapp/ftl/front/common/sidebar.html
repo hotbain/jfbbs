@@ -1,4 +1,4 @@
-<#macro sidebar sidebar_user_info="" sidebar_topic_user="" sidebar_checkin="" sidebar_create="" sidebar_scoretop="" sidebar_create_info="" sidebar_friendlylinks="">
+<#macro sidebar sidebar_user_info="" sidebar_topic_user="" sidebar_checkin="" sidebar_create="" sidebar_scoretop="" sidebar_create_info="" sidebar_friendlylinks="" sidebar_about="">
 <#if sidebar_user_info == "show">
 <div class="jf_panel">
     <#if session.user??>
@@ -19,7 +19,7 @@
     <#else>
         <div class="jf_inner">
             <span style="font-size: 16px; font-weight: 400; display: inline-block;">JFinal社区</span><br>
-            您可以使用下列第三方登录<br>
+            您可以 <a href="${ctx_path}/login">登录</a> 或 <a href="${ctx_path}/register">注册</a> , 也可以<br>
             <a href="${ctx_path}/qqlogin" class="btn btn-success">&nbsp;&nbsp;&nbsp;通过 QQ 登录&nbsp;&nbsp;&nbsp;</a>
         </div>
     </#if>
@@ -93,12 +93,25 @@
         友情链接
     </div>
     <div class="jf_inner" style="padding-left: 20px;">
-        <p><a href="http://www.jfinal.com" target="_blank">JFinal官网</a></p>
-        <p><a href="http://www.oschina.net" target="_blank">开源中国</a></p>
-        <p><a href="http://jfinalxm.sturgeon.mopaas.com/" target="_blank">小木学堂</a></p>
-        <p><a href="http://www.91zcm.com/" target="_blank">91注册码</a></p>
-        <p><a href="http://www.xx566.com/" target="_blank">JFBlog</a></p>
+        <#list links as link>
+            <p><a href="${link.url!}" target="_blank">${link.name!}</a></p>
+        </#list>
     </div>
 </div>
 </#if>
+    <#if sidebar_about == "show">
+        <div class="jf_panel">
+            <div class="jf_header">关于</div>
+            <div class="jf_inner">
+                <p>JFinal社区：JFinal框架开发的社区</p>
+                <p>在这里你可以：</p>
+                <ul>
+                    <li>向别人提出你遇到的问题</li>
+                    <li>帮助遇到问题的人</li>
+                    <li>分享自己的知识</li>
+                    <li>和其它人一起进步</li>
+                </ul>
+            </div>
+        </div>
+    </#if>
 </#macro>

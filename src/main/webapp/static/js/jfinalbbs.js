@@ -1,17 +1,31 @@
 /**
  * Created by liuyang on 15/4/2.
  */
-var tab = {
-    "ask": "讨论",
-    "blog": "博客",
-    "code": "代码"
+var emailReg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+
+var topic_top = {
+    1: "<span style='color: yellowgreen'>置顶</span>",
+    0: ""
+};
+
+var topic_good = {
+    1: "<span style='color: yellowgreen'>精华</span>",
+    0: ""
 };
 
 function formatDateTime(datetime) {
-    datetime = datetime.replace("-", "/")
+    //datetime = datetime.replace("-", "/");
     var current_date = new Date().getTime();
-    var date = new Date(datetime).getTime();
-    var mul = current_date - date;
+    var _date = datetime.split(" ")[0];
+    var _time = datetime.split(" ")[1];
+    var date = new Date();
+    date.setFullYear(_date.split("-")[0]);
+    date.setMonth(_date.split("-")[1] - 1);
+    date.setDate(_date.split("-")[2]);
+    date.setHours(_time.split(":")[0]);
+    date.setMinutes(_time.split(":")[1]);
+    date.setSeconds(_time.split(":")[2]);
+    var mul = current_date - date.getTime();
     var time = parseInt(mul / 1000);
     if (time < 60) {
         return "刚刚";

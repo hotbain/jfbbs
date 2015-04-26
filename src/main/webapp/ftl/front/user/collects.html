@@ -22,13 +22,7 @@
                 <span class="label label-success">精华</span>
             <#else>
                 <span class="label label-default">
-                    <#if topic.tab == "ask">
-                        讨论
-                    <#elseif topic.tab == "blog">
-                        博客
-                    <#elseif topic.tab == "code">
-                        代码
-                    </#if>
+                    ${topic.sectionName!}
                 </span>
             </#if>
                 <span class="jf_topic_title">

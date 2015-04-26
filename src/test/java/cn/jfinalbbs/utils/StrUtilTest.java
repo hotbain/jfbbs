@@ -6,7 +6,6 @@ import org.junit.Test;
 import java.util.Random;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
 
 public class StrUtilTest {
 
@@ -36,5 +35,10 @@ public class StrUtilTest {
     @Test
     public void testMd5() {
         System.out.println(EncryptionKit.md5Encrypt("asd"));
+    }
+
+    @Test
+    public void testUUID() {
+        System.out.println(StrUtil.getUUID());
     }
 }

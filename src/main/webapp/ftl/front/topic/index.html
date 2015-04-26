@@ -35,15 +35,7 @@
             </#if>
             <span>
                 •来自
-                <#if topic.tab == 'ask'>
-                    讨论
-                <#elseif topic.tab == 'blog'>
-                    博客
-                <#elseif topic.tab == 'code'>
-                    代码
-                <#elseif topic.tab == 'job'>
-                    招聘
-                </#if>
+                ${topic.sectionName!}
             </span>
             <#if session.user?? && topic.author_id == session.user.id>
                 <span style="display: inline-block; float: right;">
