@@ -65,6 +65,10 @@ public class Topic extends Model<Topic> {
                 "select t.*, (select s.tab from section s where s.id = t.s_id) as tab, (select count(r.id) from reply r where r.tid = t.id) as reply_count,(select u.avatar from user u where u.id = t.author_id) as avatar",
                 "from topic t where t.author_id = ? order by in_time desc", authorId);
     }
+
+    public Topic findWithSection(String id) {
+        return super.findFirst("select t.*, s.name as sectionName, s.tab from topic t left join section s on t.s_id = s.id where t.id = ?", id);
+    }
     // --------------- 前台查询方法 结束 --------------
 
 

@@ -45,7 +45,7 @@ public class TopicController extends BaseController {
     @Before(UserInterceptor.class)
     public void edit(){
         String tid = getPara(0);
-        Topic topic = Topic.me.findById(tid);
+        Topic topic = Topic.me.findWithSection(tid);
         if(topic == null) {
             renderText(Constants.OP_ERROR_MESSAGE);
         } else {
