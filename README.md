@@ -1,12 +1,12 @@
-##### JFinal社区：一个是使用JFinal框架开发的社区网站
-##### 线上地址：http://jfinalbbs.liygheart.com/
-##### 后台页面入口地址：http://你的域名/adminlogin
-##### 项目组成：
+### JFinal社区：一个是使用JFinal框架开发的社区网站
+#### 线上地址：http://jfinalbbs.liygheart.com/
+#### 后台页面入口地址：http://你的域名/adminlogin
+#### 项目组成：
 * 前端：bootstrap + freemarker
 * 后端：jfinal 
 * 数据库：mysql
 
-###### 项目运行方式：
+#### 项目运行方式：
 * 将代码拉取下来
 * 编译pom.xml文件，下载好jar包
 * 将项目按照maven格式配置好
@@ -16,5 +16,21 @@
 * qq登录的回调执行方法在IndexController里，方法名：qqlogincallback，所以，回调地址的格式：http://你的域名/qqlogincallback
 * 至此配置就结束了，运行一下查看效果吧！
 
-###### 如果项目中遇到什么问题，欢迎联系我：liygheart@qq.com
-###### 也可以到JFinal社区群里反馈，qq群号：419343003
+---
+### 2015年04月26日 更新
+- 社区模块后台设置
+- 社区添加登录注册功能（找回密码的话需要发送邮件，这时候需要自己配置邮箱的用户名，密码，配置类：EmailSender
+```
+    // 邮箱服务器
+    private String host = "smtp.exmail.qq.com";
+    private String username = "";
+    private String password = "";
+```
+- 友链后台设置
+- 话题后台设置置顶，精华
+- 模块列表，友链列表 加缓存
+- 模块，友链，后台排序（使用的是 jqueryui）
+
+
+#### 如果项目中遇到什么问题，欢迎联系我：liygheart@qq.com
+#### 也可以到JFinal社区群里反馈，qq群号：419343003
