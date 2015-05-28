@@ -69,7 +69,7 @@
                             },
                             success: function (data) {
                                 if (data.code == '200') {
-                                    location.href = "/";
+                                    location.href = "${ctx_path!}/";
                                 } else {
                                     alert(data.description);
                                 }

@@ -35,7 +35,7 @@
                         alert("请输入密码");
                     } else {
                         $.ajax({
-                            url: "/reset",
+                            url: "${ctx_path!}/reset",
                             async: false,
                             cache: false,
                             type: 'post',
@@ -48,7 +48,7 @@
                             success: function (data) {
                                 if (data.code == '200') {
                                     alert(data.detail);
-                                    location.href="/login";
+                                    location.href="${ctx_path!}/login";
                                 } else {
                                     alert(data.description);
                                 }
