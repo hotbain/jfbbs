@@ -1,5 +1,8 @@
 package cn.jfinalbbs.utils;
 
+import com.jfinal.kit.Prop;
+import com.jfinal.kit.PropKit;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -12,29 +15,27 @@ import java.util.Properties;
 public class EmailSender {
 
     public static final String EMAIL_BODY_HEADER = "";
-
+    // 邮箱服务器
+    private String host = "smtp.exmail.qq.com";
     private String MAIL_SUBJECT = "测试邮件";
-
     private String PERSONAL_NAME = "朋也";
+    private String username;
+    private String password;
+    private String mail_from;
 
     static class EmailSenderHolder {
-        static EmailSender instance = new EmailSender();
+        static Prop prop = PropKit.getProp("config.properties");
+        static EmailSender instance = new EmailSender(prop.get("email.username"), prop.get("email.password"));
     }
 
     public static EmailSender getInstance() {
         return EmailSenderHolder.instance;
     }
 
-    // 邮箱服务器
-    private String host = "smtp.exmail.qq.com";
-    private String username = "liygheart@qq.com";
-    private String password = "";
-
-
-    private String mail_from = username;
-
-
-    public EmailSender() {
+    public EmailSender(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.mail_from = username;
     }
 
     /**

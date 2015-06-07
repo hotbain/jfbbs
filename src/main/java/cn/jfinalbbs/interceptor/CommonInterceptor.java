@@ -8,6 +8,7 @@ import cn.jfinalbbs.utils.DateUtil;
 import cn.jfinalbbs.utils.StrUtil;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
+import com.jfinal.kit.PropKit;
 
 import java.util.Date;
 
@@ -36,6 +37,8 @@ public class CommonInterceptor implements Interceptor {
 
         // 查询友链
         ai.getController().getRequest().setAttribute("links", Link.me.findAll());
+
+        ai.getController().getRequest().setAttribute("baseUrl", Constants.getBaseUrl());
 
         ai.invoke();
     }

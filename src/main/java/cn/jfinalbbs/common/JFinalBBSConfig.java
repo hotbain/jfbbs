@@ -32,7 +32,6 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
-import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.ext.interceptor.SessionInViewInterceptor;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
@@ -67,6 +66,7 @@ public class JFinalBBSConfig extends JFinalConfig {
         adminRoute(me);
 	}
 
+	//后台路由配置
     public void adminRoute(Routes me) {
         me.add("/admin", IndexAdminController.class, "ftl/admin");
         me.add("/admin/topic", TopicAdminController.class, "ftl/admin/topic");
@@ -88,7 +88,7 @@ public class JFinalBBSConfig extends JFinalConfig {
 		
 		// 配置ActiveRecord插件
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
-        arp.setShowSql(true);
+        arp.setShowSql(getPropertyToBoolean("showSql", false));
 		me.add(arp);
 		arp.addMapping("topic", Topic.class);	// 映射blog 表到 Blog模型
 		arp.addMapping("reply", Reply.class);
@@ -100,8 +100,9 @@ public class JFinalBBSConfig extends JFinalConfig {
 		arp.addMapping("code", Code.class);
 		arp.addMapping("section", Section.class);
 		arp.addMapping("link", Link.class);
+
 	}
-	
+
 	/**
 	 * 配置全局拦截器
 	 */
@@ -115,7 +116,6 @@ public class JFinalBBSConfig extends JFinalConfig {
 	 */
 	public void configHandler(Handlers me) {
         me.add(new HtmlHandler());
-        me.add(new ContextPathHandler("ctx_path"));
 	}
 	
 	/**
@@ -123,6 +123,6 @@ public class JFinalBBSConfig extends JFinalConfig {
 	 * 运行此 main 方法可以启动项目，此main方法可以放置在任意的Class类定义中，不一定要放于此
 	 */
 	public static void main(String[] args) {
-		JFinal.start("src/main/webapp", 80, "/", 5);
+		JFinal.start("src/main/webapp", 8080, "/", 5);
 	}
 }

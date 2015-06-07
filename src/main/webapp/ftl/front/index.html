@@ -3,13 +3,13 @@
 <div class="jf_panel">
     <div class="jf_header">
         <#if q??>
-            <a class="topic-tab <#if tab == 'all'> current-tab </#if>" href="${ctx_path}/?tab=all&q=${q!}">全部</a>
+            <a class="topic-tab <#if tab == 'all'> current-tab </#if>" href="${baseUrl!}/?tab=all&q=${q!}">全部</a>
             <#list sections as section>
-                <a class="topic-tab <#if tab == '${section.tab!}'> current-tab </#if>" href="${ctx_path}/?tab=${section.tab!}&q=${q!}">${section.name!}</a>
+                <a class="topic-tab <#if tab == '${section.tab!}'> current-tab </#if>" href="${baseUrl!}/?tab=${section.tab!}&q=${q!}">${section.name!}</a>
             </#list>
         <#else>
             <ul class="jf_breadcrumb">
-                <li><a href="/">首页</a></li>
+                <li><a href="${baseUrl!}/">首页</a></li>
 
                 <#list sections as section>
                     <#if tab == 'all'>
@@ -26,7 +26,7 @@
     <div class="jf_inner" style="padding: 0px;">
         <#list page.getList() as topic>
             <div class="jf_cell">
-                <img src="${topic.avatar!}" onerror="this.src='${ctx_path}/static/img/default_avatar.png'" title="${topic.nickname!}" width="30">
+                <img src="${topic.avatar!}" onerror="this.src='${baseUrl!}/static/img/default_avatar.png'" title="${topic.nickname!}" width="30">
                 <span style="display: inline-block; min-width: 40px;text-align: center;" class="hidden-xs">
                     <span title="回复数">${topic.reply_count!}</span>
                     /
@@ -42,7 +42,7 @@
                     </span>
                 </#if>
                 <span class="jf_topic_title">
-                    &nbsp;&nbsp;<a href="${ctx_path}/topic/${topic.id!}.html">${topic.title!}</a>
+                    &nbsp;&nbsp;<a href="${baseUrl!}/topic/${topic.id!}.html">${topic.title!}</a>
                 </span>
                 <span style="display: inline-block; float: right;">
                     <script>document.write(formatDateTime('${topic.in_time!}'))</script>

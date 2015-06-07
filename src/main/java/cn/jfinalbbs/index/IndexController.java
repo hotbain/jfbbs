@@ -6,11 +6,13 @@ import cn.jfinalbbs.system.Code;
 import cn.jfinalbbs.topic.Topic;
 import cn.jfinalbbs.user.AdminUser;
 import cn.jfinalbbs.user.User;
-import cn.jfinalbbs.utils.DateUtil;
-import cn.jfinalbbs.utils.EmailSender;
-import cn.jfinalbbs.utils.EncryptionUtil;
-import cn.jfinalbbs.utils.StrUtil;
+import cn.jfinalbbs.utils.*;
+import cn.weibo.Users;
+import cn.weibo.model.WeiboException;
+import cn.weibo.util.BareBonesBrowserLaunch;
+import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.upload.UploadFile;
 import com.qq.connect.QQConnectException;
 import com.qq.connect.api.OpenID;
 import com.qq.connect.api.qzone.UserInfo;
@@ -19,6 +21,10 @@ import com.qq.connect.javabeans.qzone.UserInfoBean;
 import com.qq.connect.oauth.Oauth;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +41,11 @@ public class IndexController extends BaseController {
         setAttr("scoreTopTen", scoreTopTen);
         setAttr("tab", tab);
         setAttr("q", q);
-//		setSessionAttr(Constants.USER_SESSION, User.me.findById("c6c8f3ac147b491eb6457cbcf53cb17f"));
         render("index.html");
 	}
 
     //本地登录
-    public void login() {
+    /*public void login() {
         String method = getRequest().getMethod();
         if(method.equalsIgnoreCase(Constants.RequestMethod.GET)) {
             String email = getCookie(Constants.COOKIE_EMAIL);
@@ -85,7 +90,7 @@ public class IndexController extends BaseController {
                         .set("type", Constants.SystemCode.TYPE_SEARCH_PASS)
                         .set("target", email)
                         .save();
-//                EmailSender.getInstance().send("JFinal社区密码重置", new String[]{email}, "点击链接重置密码：http://jfinalbbs.liygheart.com/reset/" + code);
+                EmailSender.getInstance().send("JFinal社区密码重置", new String[]{email}, "点击链接重置密码：" + Constants.getBaseUrl() + "/reset/" + code);
                 success("我们已给您填写的电子邮箱发送了一封邮件，请在24小时内点击里面的链接来重置密码。");
             }
         }
@@ -141,23 +146,23 @@ public class IndexController extends BaseController {
                     .set("mission", new Date())
                     .set("in_time", new Date())
                     .set("email", email)
-                    .set("avatar", "http://jfinalbbs.liygheart.com/static/img/default_avatar.png")
+                    .set("avatar", Constants.getBaseUrl() + "/static/img/default_avatar.png")
                     .set("password", EncryptionUtil.md5Encrypt(password))
                     .save();
-                setCookie(Constants.USER_COOKIE, user != null ? StrUtil.getEncryptionToken(user.getStr("token")) : null, 30*24*60*60);
+                setCookie(Constants.USER_COOKIE, StrUtil.getEncryptionToken(user.getStr("token")), 30*24*60*60);
                 setSessionAttr(Constants.USER_SESSION, user);
                 success();
             } else {
                 error("邮箱已经注册过");
             }
         }
-    }
+    }*/
 
     //登出
     public void logout() {
         removeCookie(Constants.USER_COOKIE);
         removeSessionAttr(Constants.USER_SESSION);
-        redirect("/");
+        redirect(Constants.getBaseUrl() + "/");
     }
 
     //跳转qq登录
@@ -165,7 +170,7 @@ public class IndexController extends BaseController {
         redirect(new Oauth().getAuthorizeURL(getRequest()));
     }
 
-    //qq登陆回调方法
+    //qq登录回调方法
     public void qqlogincallback() throws QQConnectException {
         HttpServletRequest request = getRequest();
         AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
@@ -198,6 +203,7 @@ public class IndexController extends BaseController {
                         .set("open_id", openID)
                         .set("expire_time", expire_in)
                         .set("in_time", new Date())
+                        .set("mission", new Date())
                         .set("thirdlogin_type", "qq").save();
                 } else {
                     renderText("很抱歉，我们没能正确获取到您的信息，原因是： " + userInfoBean.getMsg());
@@ -209,10 +215,57 @@ public class IndexController extends BaseController {
             setCookie(Constants.USER_COOKIE, user != null ? StrUtil.getEncryptionToken(user.getStr("token")) : null, 30*24*60*60);
             String uri = getSessionAttr(Constants.BEFORE_URL);
             if(StrUtil.isBlank(uri)) {
-                redirect("/");
+                redirect(Constants.getBaseUrl() + "/");
             } else {
                 redirect(uri);
             }
+        }
+    }
+
+    //新浪微博登录
+    public void weibologin() throws WeiboException, IOException {
+        cn.weibo.Oauth oauth = new cn.weibo.Oauth();
+//        BareBonesBrowserLaunch.openURL(oauth.authorize("code"));
+        redirect(oauth.authorize("code"));
+    }
+
+    //新浪微博登录后回调
+    public void weibologincallback() throws WeiboException {
+        String code = getPara("code");
+        cn.weibo.Oauth oauth = new cn.weibo.Oauth();
+        cn.weibo.http.AccessToken accessToken = oauth.getAccessTokenByCode(code);
+        Users users = new Users(accessToken.getAccessToken());
+        cn.weibo.model.User weiboUser = users.showUserById(accessToken.getUid());
+        if(weiboUser != null) {
+            String gender = "未知";
+            if (weiboUser.getGender().equals("m")) {
+                gender = "男";
+            } else if (weiboUser.getGender().equals("f")) {
+                gender = "女";
+            }
+            Date expire_in = DateUtil.getDateAfter(new Date(), Integer.parseInt(accessToken.getExpireIn()) / 60 / 60 / 24);
+            User user = User.me.findByOpenID(weiboUser.getId(), "weibo_sina");
+            if (user == null) {
+                user = new User();
+                user.set("id", StrUtil.getUUID())
+                        .set("nickname", weiboUser.getScreenName())
+                        .set("token", StrUtil.getUUID())
+                        .set("score", 0)
+                        .set("gender", gender)
+                        .set("avatar", weiboUser.getAvatarLarge())
+                        .set("open_id", weiboUser.getId())
+                        .set("expire_time", expire_in)
+                        .set("in_time", new Date())
+                        .set("mission", new Date())
+                        .set("thirdlogin_type", "weibo_sina").save();
+            } else if (DateUtil.isExpire((Date) user.get("expire_time"))) {
+                user.set("expire_time", expire_in).update();
+            }
+            setSessionAttr(Constants.USER_SESSION, user);
+            setCookie(Constants.USER_COOKIE, StrUtil.getEncryptionToken(user.getStr("token")), 30 * 24 * 60 * 60);
+            redirect(Constants.getBaseUrl() + "/");
+        } else {
+            renderText("新浪微博登陆失败");
         }
     }
 
@@ -242,12 +295,9 @@ public class IndexController extends BaseController {
                 }
                 String before_url = getSessionAttr(Constants.ADMIN_BEFORE_URL);
                 if(!StrUtil.isBlank(before_url) && !before_url.contains("adminlogin")) redirect(before_url);
-                redirect("/admin/index");
+                redirect(Constants.getBaseUrl() + "/admin/index");
             }
         }
     }
 
 }
-
-
-

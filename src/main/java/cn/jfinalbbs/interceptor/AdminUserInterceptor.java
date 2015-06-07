@@ -42,7 +42,7 @@ public class AdminUserInterceptor implements Interceptor {
             }
             if (!param.equals("")) uri += "?" + param;
             session.setAttribute(Constants.ADMIN_BEFORE_URL, uri);
-            ai.getController().redirect("/adminlogin");
+            ai.getController().redirect(Constants.getBaseUrl() + "/adminlogin");
         } else {
             ai.invoke();
         }

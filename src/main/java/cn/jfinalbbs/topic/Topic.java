@@ -1,5 +1,6 @@
 package cn.jfinalbbs.topic;
 
+import cn.jfinalbbs.section.Section;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
@@ -36,6 +37,14 @@ public class Topic extends Model<Topic> {
             }
             condition.append(" ) ");
         }
+        List<Section> sections = Section.me.findAll();
+        if(sections.size()>0) {
+            String sid = "";
+            for(Section s: sections) {
+                sid += s.get("id") + ",";
+            }
+            condition.append(" and t.s_id in ("+sid.substring(0, sid.length() - 1)+") ");
+        }
         return super.paginate(pageNumber, pageSize, select, condition + orderBy);
     }
 
@@ -62,7 +71,7 @@ public class Topic extends Model<Topic> {
 
     public Page<Topic> paginateByAuthorId(int pageNumber, int pageSize, String authorId) {
         return super.paginate(pageNumber, pageSize,
-                "select t.*, (select s.tab from section s where s.id = t.s_id) as tab, (select count(r.id) from reply r where r.tid = t.id) as reply_count,(select u.avatar from user u where u.id = t.author_id) as avatar",
+                "select t.*, (select s.tab from section s where s.id = t.s_id) as tab, (select s.name from section s where s.id = t.s_id) as sectionName, (select count(r.id) from reply r where r.tid = t.id) as reply_count,(select u.avatar from user u where u.id = t.author_id) as avatar",
                 "from topic t where t.author_id = ? order by in_time desc", authorId);
     }
 

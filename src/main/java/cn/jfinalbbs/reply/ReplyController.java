@@ -64,7 +64,7 @@ public class ReplyController extends BaseController {
                         .set("author_id", topic.get("author_id"))
                         .set("in_time", new Date()).save();
             }
-            redirect("/topic/" + tid + ".html" + "#" + reply.get("id"));
+            redirect(Constants.getBaseUrl() + "/topic/" + tid + ".html" + "#" + reply.get("id"));
         }
     }
 }

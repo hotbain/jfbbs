@@ -21,9 +21,10 @@ public class LinkAdminController extends BaseController {
         if(method.equalsIgnoreCase(Constants.RequestMethod.GET)) {
             render("add.html");
         } else if(method.equalsIgnoreCase(Constants.RequestMethod.POST)) {
-            getModel(Link.class).save();
+            int maxDisplayIndex = Link.me.maxDisplayIndex();
+            getModel(Link.class).set("display_index", maxDisplayIndex + 1).save();
             clearCache(Constants.CacheName.LINKLIST, null);
-            redirect("/admin/link");
+            redirect(Constants.getBaseUrl() + "/admin/link");
         }
     }
 
@@ -36,7 +37,7 @@ public class LinkAdminController extends BaseController {
         } else if(method.equalsIgnoreCase(Constants.RequestMethod.POST)) {
             getModel(Link.class).update();
             clearCache(Constants.CacheName.LINKLIST, null);
-            redirect("/admin/link");
+            redirect(Constants.getBaseUrl() + "/admin/link");
         }
     }
 
@@ -64,6 +65,6 @@ public class LinkAdminController extends BaseController {
             }
             clearCache(Constants.CacheName.LINKLIST, null);
         }
-        redirect("/admin/link");
+        redirect(Constants.getBaseUrl() + "/admin/link");
     }
 }

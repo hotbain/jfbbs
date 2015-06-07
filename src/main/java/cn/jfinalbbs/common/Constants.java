@@ -1,5 +1,7 @@
 package cn.jfinalbbs.common;
 
+import com.jfinal.kit.PropKit;
+
 /**
  * Created by liuyang on 15/4/2.
  */
@@ -20,6 +22,10 @@ public class Constants {
 
     public static final String COOKIE_ADMIN_TOKEN = "admin_user_token";
     public static final String COOKIE_EMAIL = "email";
+
+    public static String getBaseUrl() {
+        return PropKit.use("config.properties").get("base.url");
+    }
 
     public static class ResultCode {
         public static final String SUCCESS = "200";

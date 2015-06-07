@@ -1,12 +1,12 @@
 <#include "/ftl/admin/common/_layout.html"/>
 <@layout page_tab="link">
 <ol class="breadcrumb">
-    <li><a href="/admin">首页</a></li>
-    <li><a href="/admin/link">友链</a></li>
+    <li><a href="${baseUrl!}/admin">首页</a></li>
+    <li><a href="${baseUrl!}/admin/link">友链</a></li>
     <li class="active">列表</li>
 </ol>
-<a href="${ctx_path}/admin/link/add" class="btn btn-sm btn-success pull-right">添加</a>
-<form id="form-sort" action="${ctx_path}/admin/link/sort" method="post">
+<a href="${baseUrl!}/admin/link/add" class="btn btn-sm btn-success pull-right">添加</a>
+<form id="form-sort" action="${baseUrl!}/admin/link/sort" method="post">
 <table class="table table-hover">
     <thead>
     <th>名称</th>
@@ -22,7 +22,7 @@
             </td>
             <td><a href="${link.url!}" target="_blank">${link.url!}</a></td>
             <td>
-                <a href="${ctx_path}/admin/link/edit?id=${link.id!}"><span class="glyphicon glyphicon-edit"></span></a>
+                <a href="${baseUrl!}/admin/link/edit?id=${link.id!}"><span class="glyphicon glyphicon-edit"></span></a>
                 <a href="javascript:deleteLink('${link.id!}')"><span class="glyphicon glyphicon-trash"></span></a>
             </td>
         </tr>
@@ -40,7 +40,7 @@
     function deleteLink(id) {
         if(confirm("确定 删除友链 吗？")) {
             $.ajax({
-                url : "${ctx_path}/admin/link/delete",
+                url : "${baseUrl!}/admin/link/delete",
                 async : false,
                 cache : false,
                 type : 'post',

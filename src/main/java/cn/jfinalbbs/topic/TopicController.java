@@ -72,7 +72,7 @@ public class TopicController extends BaseController {
                     .set("original_url", original_url)
                     .set("modify_time", new Date())
                     .update();
-            redirect("/topic/" + tid);
+            redirect(Constants.getBaseUrl() + "/topic/" + tid);
         }
     }
 
@@ -90,7 +90,7 @@ public class TopicController extends BaseController {
                 Reply.me.deleteByTid(topic.getStr("id"));
                 //删除收藏
                 Collect.me.deleteByTid(topic.getStr("id"));
-                redirect("/");
+                redirect(Constants.getBaseUrl() + "/");
             } catch (Exception e) {
                 e.printStackTrace();
                 renderText("删除失败");
@@ -120,7 +120,7 @@ public class TopicController extends BaseController {
                 .save();
         //将积分增加3分
         user.set("score", user.getInt("score") + 3).update();
-        redirect("/topic/" + topic.get("id"));
+        redirect(Constants.getBaseUrl() + "/topic/" + topic.get("id"));
     }
 
 }

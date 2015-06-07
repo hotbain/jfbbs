@@ -12,6 +12,7 @@ import java.util.List;
 public class Section extends Model<Section> implements Serializable {
 
     public final static Section me = new Section();
+    private static final long serialVersionUID = 4544063185256404806L;
 
     public List<Section> findAll() {
         return super.findByCache(Constants.CacheName.SECTIONLIST, Constants.CacheKey.SECTIONLISTKEY, "select * from section order by display_index");

@@ -35,7 +35,7 @@ function formatDateTime(datetime) {
         return parseInt(time / 3600) + " 小时前";
     } else if (time < 604800) {
         return parseInt(time / 86400) + " 天前";
-    } else if (time < 2419200) {
+    } else if (time < 2592000) {
         return parseInt(time / 604800) + " 周前";
     } else if (time < 31536000) {
         return parseInt(time / 2592000) + " 个月前";
@@ -44,3 +44,10 @@ function formatDateTime(datetime) {
     }
     return datetime;
 }
+
+// 微信
+var wx_sex = {
+    1: '男',
+    2: '女',
+    0: '未知'
+};

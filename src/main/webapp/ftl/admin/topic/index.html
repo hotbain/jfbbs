@@ -1,8 +1,8 @@
 <#include "/ftl/admin/common/_layout.html"/>
 <@layout page_tab="topic">
 <ol class="breadcrumb">
-    <li><a href="/admin">首页</a></li>
-    <li><a href="/admin/topic">话题</a></li>
+    <li><a href="${baseUrl!}/admin">首页</a></li>
+    <li><a href="${baseUrl!}/admin/topic">话题</a></li>
     <li class="active">列表</li>
 </ol>
 <table class="table table-hover">
@@ -38,7 +38,7 @@
     function deleteTopic(id) {
         if(confirm("确定 删除话题 吗？\n(注：这会删除话题下的所有回复以及被别人收藏的记录！)")) {
             $.ajax({
-                url : "${ctx_path}/admin/topic/delete",
+                url : "${baseUrl!}/admin/topic/delete",
                 async : false,
                 cache : false,
                 type : 'post',
@@ -59,7 +59,7 @@
     function setTop(id) {
         if(confirm("确定 置顶/取消置顶 吗？")) {
             $.ajax({
-                url : "${ctx_path}/admin/topic/top",
+                url : "${baseUrl!}/admin/topic/top",
                 async : false,
                 cache : false,
                 type : 'post',
@@ -84,7 +84,7 @@
     function setGood(id) {
         if(confirm("确定 加精/取消加精 吗？")) {
             $.ajax({
-                url : "${ctx_path}/admin/topic/good",
+                url : "${baseUrl!}/admin/topic/good",
                 async : false,
                 cache : false,
                 type : 'post',

@@ -18,6 +18,6 @@ public class IndexAdminController extends BaseController {
     public void logout() {
 //        removeSessionAttr(Constants.ADMIN_USER_SESSION);
         removeCookie(Constants.COOKIE_ADMIN_TOKEN);
-        redirect("/");
+        redirect(Constants.getBaseUrl() + "/");
     }
 }

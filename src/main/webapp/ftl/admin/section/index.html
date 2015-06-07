@@ -1,12 +1,12 @@
 <#include "/ftl/admin/common/_layout.html"/>
 <@layout page_tab="section">
 <ol class="breadcrumb">
-    <li><a href="/admin">首页</a></li>
-    <li><a href="/admin/section">模块</a></li>
+    <li><a href="${baseUrl!}/admin">首页</a></li>
+    <li><a href="${baseUrl!}/admin/section">模块</a></li>
     <li class="active">列表</li>
 </ol>
-<a href="${ctx_path}/admin/section/add" class="btn btn-sm btn-success pull-right">添加</a>
-<form id="form-sort" action="${ctx_path}/admin/section/sort" method="post">
+<a href="${baseUrl!}/admin/section/add" class="btn btn-sm btn-success pull-right">添加</a>
+<form id="form-sort" action="${baseUrl!}/admin/section/sort" method="post">
 <table class="table table-hover">
     <thead>
     <th>名称</th>
@@ -22,7 +22,7 @@
             </td>
             <td>${section.tab!}</td>
             <td>
-                <a href="${ctx_path}/admin/section/edit?id=${section.id!}"><span class="glyphicon glyphicon-edit"></span></a>
+                <a href="${baseUrl!}/admin/section/edit?id=${section.id!}"><span class="glyphicon glyphicon-edit"></span></a>
                 <a href="javascript:deleteSection('${section.id!}')"><span class="glyphicon glyphicon-trash"></span></a>
             </td>
         </tr>
@@ -40,7 +40,7 @@
     function deleteSection(id) {
         if(confirm("确定 删除模块 吗？")) {
             $.ajax({
-                url : "${ctx_path}/admin/section/delete",
+                url : "${baseUrl!}/admin/section/delete",
                 async : false,
                 cache : false,
                 type : 'post',

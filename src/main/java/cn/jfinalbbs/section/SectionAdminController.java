@@ -29,7 +29,7 @@ public class SectionAdminController extends BaseController {
             section.set("name", name).set("tab", tab).set("display_index", 99).save();
             // clear cache
             clearCache(Constants.CacheName.SECTIONLIST, null);
-            redirect("/admin/section/index");
+            redirect(Constants.getBaseUrl() + "/admin/section/index");
         }
     }
 
@@ -47,7 +47,7 @@ public class SectionAdminController extends BaseController {
             section.set("name", name).set("tab", tab).update();
             // clear cache
             clearCache(Constants.CacheName.SECTIONLIST, null);
-            redirect("/admin/section/index");
+            redirect(Constants.getBaseUrl() + "/admin/section/index");
         }
     }
 
@@ -62,7 +62,7 @@ public class SectionAdminController extends BaseController {
         }
         // clear cache
         clearCache(Constants.CacheName.SECTIONLIST, null);
-        redirect("/admin/section/index");
+        redirect(Constants.getBaseUrl() + "/admin/section/index");
     }
 
     // 删除模块
