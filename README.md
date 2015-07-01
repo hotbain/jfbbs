@@ -20,6 +20,7 @@
 ### 2015年04月26日 更新
 - 社区模块后台设置
 - 社区添加登录注册功能（找回密码的话需要发送邮件，这时候需要自己配置邮箱的用户名，密码，配置类：EmailSender
+
 ```java
     // 邮箱服务器
     private String host = "smtp.exmail.qq.com";
