@@ -11,3 +11,8 @@
 hs_err_pid*
 
 .idea/
+target/
+*.prefs
+.classpath
+.project
+jfinalbbs.log
